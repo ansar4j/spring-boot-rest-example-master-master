@@ -11,6 +11,9 @@ You will see the Swagger screen for testing the application.You need to enter
 3.	CustomerID   [Enter the customer id]
  
 You will get back below response in the Swagger screen , it shows the net payable amount refer  read-me.docx  file
+
 The REST Services Code from Eclipse is attached for your quick understanding  refer  read-me.docx  file
+
 UNIT TESTING CODE /TEST CASE refer  read-me.docx  file
+
 UML DIAGRAMS refer  read-me.docx  file
