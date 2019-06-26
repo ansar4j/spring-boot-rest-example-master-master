@@ -1,0 +1,83 @@
+package com.khoubyari.example.domain;
+
+import javax.persistence.*;
+import javax.xml.bind.annotation.*;
+
+/*
+ * a simple domain entity doubling as a DTO
+ */
+@Entity
+@Table(name = "discount")
+@XmlRootElement
+@XmlAccessorType(XmlAccessType.FIELD)
+public class Discount {
+
+    @Id
+    @GeneratedValue()
+    private long id;
+
+    public float getActualAmount() {
+		return actualAmount;
+	}
+
+
+	public void setActualAmount(float actualAmount) {
+		this.actualAmount = actualAmount;
+	}
+
+
+	public String getDescription() {
+		return description;
+	}
+
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+
+	public String getCustomerType() {
+		return customerType;
+	}
+
+
+	public void setCustomerType(String customerType) {
+		this.customerType = customerType;
+	}
+
+
+	public double getNetPayableAmount() {
+		return netPayableAmount;
+	}
+
+
+	public void setNetPayableAmount(double d) {
+		this.netPayableAmount = d;
+	}
+
+	@Column(nullable = false)
+    private float actualAmount;
+
+    @Column()
+    private String description;
+
+    @Column()
+    String customerType;
+
+    @Column()
+    private double netPayableAmount;
+
+    public Discount() {
+    }
+
+
+    public long getId() {
+        return this.id;
+    }
+
+    // for tests ONLY
+    public void setId(long id) {
+        this.id = id;
+    }
+
+}

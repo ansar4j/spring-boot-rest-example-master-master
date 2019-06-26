@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<typeInfoHistroy>
+<typeInfo handle="=spring-boot-rest-example-master/src\/main\/java&lt;com.khoubyari.example.domain{Discount.java[Discount" modifiers="1" timestamp="1559038613352"/>
+<typeInfo handle="=spring-boot-rest-example-master/src\/main\/java&lt;com.khoubyari.example.api.rest{DiscountController.java[DiscountController" modifiers="1" timestamp="1559039403746"/>
+<typeInfo handle="=spring-boot-rest-example-master/src\/main\/java&lt;com.khoubyari.example.dao.jpa{DiscountRepository.java[DiscountRepository" modifiers="513" timestamp="1559039503796"/>
+<typeInfo handle="=spring-boot-rest-example-master/src\/main\/java&lt;com.khoubyari.example.service{DiscountService.java[DiscountService" modifiers="1" timestamp="1559039469078"/>
+</typeInfoHistroy>

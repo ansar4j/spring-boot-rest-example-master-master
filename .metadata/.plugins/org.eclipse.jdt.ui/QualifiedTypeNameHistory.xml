@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<qualifiedTypeNameHistroy>
+<fullyQualifiedTypeName name="com.khoubyari.example.util.DateDiffeent"/>
+<fullyQualifiedTypeName name="java.time.LocalDate"/>
+<fullyQualifiedTypeName name="java.text.SimpleDateFormat"/>
+<fullyQualifiedTypeName name="java.text.DateFormat"/>
+<fullyQualifiedTypeName name="java.util.Date"/>
+<fullyQualifiedTypeName name="com.khoubyari.example.api.rest.DiscountController"/>
+<fullyQualifiedTypeName name="com.khoubyari.example.service.DiscountService"/>
+<fullyQualifiedTypeName name="com.khoubyari.example.dao.jpa.DiscountRepository"/>
+<fullyQualifiedTypeName name="com.khoubyari.example.domain.Discount"/>
+</qualifiedTypeNameHistroy>

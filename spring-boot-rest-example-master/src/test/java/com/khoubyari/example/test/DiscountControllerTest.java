@@ -1,0 +1,78 @@
+package com.khoubyari.example.test;
+
+/**
+ * Uses JsonPath: http://goo.gl/nwXpb, Hamcrest and MockMVC
+ */
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.khoubyari.example.Application;
+import com.khoubyari.example.api.rest.DiscountController;
+import com.khoubyari.example.domain.Discount;
+
+
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
+import org.mockito.MockitoAnnotations;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.MediaType;
+import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
+import org.springframework.test.web.servlet.ResultMatcher;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.web.context.WebApplicationContext;
+
+import java.util.Random;
+import java.util.regex.Pattern;
+
+import static org.hamcrest.Matchers.*;
+import static org.junit.Assert.assertTrue;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
+@RunWith(SpringJUnit4ClassRunner.class)
+@SpringBootTest(classes = Application.class)
+@ActiveProfiles("test")
+public class DiscountControllerTest {
+
+    
+
+    @InjectMocks
+    DiscountController controller;
+
+    @Autowired
+    WebApplicationContext context;
+
+    private MockMvc mvc;
+
+    @Before
+    public void initTests() {
+        MockitoAnnotations.initMocks(this);
+        mvc = MockMvcBuilders.webAppContextSetup(context).build();
+    }
+
+
+    @Test
+    public void checknetPayableAmount() throws Exception {
+    	Discount r1 = mockObject("netPay");
+           mvc.perform(get("/example/v1/discount/10000/2000/12909")
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.netPayableAmount", is(r1.getNetPayableAmount())));
+                
+        
+    }
+
+    private Discount mockObject(String prefix) {
+    	Discount r = new Discount();
+        r.setNetPayableAmount(280);
+        return r;
+    }
+
+
+}

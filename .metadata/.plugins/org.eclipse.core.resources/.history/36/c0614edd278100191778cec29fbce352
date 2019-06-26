@@ -1,0 +1,78 @@
+package com.khoubyari.example.api.rest;
+
+import io.swagger.annotations.Api;
+
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.util.Date;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
+
+import com.khoubyari.example.domain.Discount;
+import com.khoubyari.example.domain.Hotel;
+import com.khoubyari.example.exception.DataFormatException;
+import com.khoubyari.example.service.HotelService;
+import com.khoubyari.example.util.DateDiffeent;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+/*
+ * Demonstrates how to set up RESTful API endpoints using Spring MVC
+ */
+
+@RestController
+@RequestMapping(value = "/example/v1/discount")
+@Api(tags = { "discount" })
+public class HotelController extends AbstractRestHandler {
+
+	@Autowired
+	private HotelService hotelService;
+
+	@RequestMapping(value = "/{totalAmount}/{groceryAmount}/{customerID}", method = RequestMethod.GET, produces = {
+			"application/json", "application/xml" })
+	@ResponseStatus(HttpStatus.OK)
+	@ApiOperation(value = "Get the net amount", notes = "You have to provide a valid hotel ID.")
+	public @ResponseBody Discount getDiscount(
+			@ApiParam(value = "The actual amount.", required = true) @PathVariable("totalAmount") float totalAmount,
+			@PathVariable("groceryAmount") float groceryAmount, @PathVariable("customerID") String customerID,
+			HttpServletRequest request, HttpServletResponse response) throws Exception {
+
+		Discount discount = new Discount();
+		checkResourceFound(discount);
+		int discountPercent = 0;
+		// to get the customer Type
+		String customerType = hotelService.getCustomerType(customerID);
+		// to get Customer Join date
+		Date customerJoinDate = hotelService.getJoinDate(customerID);
+		// to calculate years as a customer
+		int noOfYears = DateDiffeent.getDiffYears(customerJoinDate, new Date());
+
+		// if the user is non customer
+		if (customerType == null) {
+			discountPercent = hotelService.getDiscountPercentage("O");
+		}
+		// if the user is customer more than 2 years
+		if (noOfYears > 2) {
+
+			discountPercent = hotelService.getDiscountPercentage("L");
+
+		} // if the user is customer but less than 2 years
+		else if (customerType != null) {
+			discountPercent = hotelService.getDiscountPercentage(customerType);
+		}
+		// net amount after removing the Grocery Amount
+		double netAmount = ((totalAmount - groceryAmount) - ((totalAmount - groceryAmount) * discountPercent) / 100);
+		// net amount again Discount 5% apply every 100 spend
+		netAmount = netAmount / 100 * 5;
+		discount.setNetPayableAmount(netAmount);
+		return discount;
+	}
+
+}
